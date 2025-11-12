@@ -3,6 +3,7 @@ const nextButton = document.querySelector('.next-button')
 const prevButton = document.querySelector('.prev-button')
 const stateButton = document.querySelector('.state-button')
 const searchInput = document.querySelector('.search')
+const infoPerson = document.querySelector('.info-person')
 let personList = []
 let info = {}
 let currentPage = 1
@@ -76,11 +77,11 @@ function render(url) {
 
 function createElement(person) {
   const element = document.createElement('div')
-  element.className = ''
+  element.className = 'person'
   element.dataset.id = person.id
 
   element.innerHTML = `
-  <div class='person'>
+  <div>
     <img src="${person.image}" class='image-person'/>
     <div>${person.name}</div>
   </div>
@@ -94,9 +95,14 @@ function attachHandlers(event) {
   const person = event.target.closest('.person')
   if (!person) return
 
-  const personId = person.dataset.id
-  const personItem = personList.find(item => item.id === personId)
+  const personId = +person.dataset.id
+  const personItem = personList.find(el => el.id === personId)
   if (personItem) {
-    console.log(personItem)
+    console.log(personItem.url)
+    fetch(personItem.url)
+      .then(response => response.json())
+      .then(person => {
+        infoPerson.innerHTML = JSON.stringify(person, null, 2)
+      })
   }
 }

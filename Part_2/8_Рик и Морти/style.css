@@ -35,3 +35,7 @@ body {
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.info-person{
+  margin: 20px 0;
+}
